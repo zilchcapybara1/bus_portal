@@ -15,12 +15,25 @@ class FlightsController < ApplicationController
       else
         @open_flights.append(f)
       end
+      @result = Seat.all.group(:seat_class_id).count
+
+      @chart_data = {}
+
+      @result.each do |k ,v |
+          @chart_data[SeatClass.find(k).class_name] =v
+        end
+      end
     end
-  end
+
 
   # GET /flights/1
   # GET /flights/1.json
   def show
+    Leaflet.tile_layer = "http://{s}.tile.cloudmade.com/YOUR-CLOUDMADE-API-KEY/997/256/{z}/{x}/{y}.png"
+# You can also use any other tile layer here if you don't want to use Cloudmade - see http://leafletjs.com/reference.html#tilelayer for more
+Leaflet.attribution = "Your attribution statement"
+Leaflet.max_zoom = 18
+
   end
 
   # GET /flights/new
@@ -82,4 +95,4 @@ class FlightsController < ApplicationController
     def flight_params
       params.require(:flight).permit(:departure, :arrival, :destination, :baggage_allowance, :capacity)
     end
-end
+  end

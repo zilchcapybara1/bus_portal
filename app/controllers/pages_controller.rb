@@ -9,9 +9,9 @@ class PagesController < ApplicationController
 		@username = params[:username]
 		@password = params[:password]
 
-		@u = User.where(username: @username).where(password: @password).first
+		@u = User.find_by(username: @username)
 
-		if !@u.nil? then
+		if @u && @u.authenticate(@password) then
 			session[:user_info] = @u
 		end
 

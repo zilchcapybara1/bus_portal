@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_07_054215) do
+ActiveRecord::Schema.define(version: 2019_06_11_095056) do
 
   create_table "flights", force: :cascade do |t|
     t.datetime "departure"
@@ -43,9 +43,10 @@ ActiveRecord::Schema.define(version: 2019_06_07_054215) do
 
   create_table "users", force: :cascade do |t|
     t.string "username"
-    t.string "password"
+    t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["username"], name: "index_users_on_username", unique: true
   end
 
 end
